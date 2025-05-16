@@ -17,15 +17,6 @@ public static class Helpers
         return featureCollection ?? throw new InvalidOperationException("FeatureCollection is null");
     }
 
-    public static string Serialize(FeatureCollection featureCollection)
-    {
-        var serializer = GeoJsonSerializer.Create();
-        using var stringWriter = new StringWriter();
-        using var jsonWriter = new JsonTextWriter(stringWriter);
-        serializer.Serialize(jsonWriter, featureCollection);
-        return stringWriter.ToString();
-    }
-
     public static double? ComputeArea(Geometry geometry)
     {
         var transformedGeometry = Transform(geometry);
