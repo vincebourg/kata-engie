@@ -1,13 +1,14 @@
 using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
+using NetTopologySuite.IO.Converters;
 using Newtonsoft.Json;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 
-internal static class Helpers
+public static class Helpers
 {
-    internal static FeatureCollection Deserialize(string jsonText)
+    public static FeatureCollection Deserialize(string jsonText)
     {
         var serializer = GeoJsonSerializer.Create();
         using var stringReader = new StringReader(jsonText);
@@ -16,7 +17,7 @@ internal static class Helpers
         return featureCollection ?? throw new InvalidOperationException("FeatureCollection is null");
     }
 
-    internal static string Serialize(FeatureCollection featureCollection)
+    public static string Serialize(FeatureCollection featureCollection)
     {
         var serializer = GeoJsonSerializer.Create();
         using var stringWriter = new StringWriter();
@@ -25,7 +26,7 @@ internal static class Helpers
         return stringWriter.ToString();
     }
 
-    internal static double? ComputeArea(Geometry geometry)
+    public static double? ComputeArea(Geometry geometry)
     {
         var transformedGeometry = Transform(geometry);
 
@@ -84,5 +85,16 @@ internal static class Helpers
     private static int UtmZone(double longitude)
     {
         return (int)((longitude + 180d) / 6d + 1d);
+    }
+
+    public static void AddNetTopologySuiteConverters(IList<JsonConverter> converters)
+    {
+        var factory = new GeometryFactory(new PrecisionModel(10_000_000), 4326);
+        var dimension = 3;
+        converters.Add(new FeatureCollectionConverter());
+        converters.Add(new FeatureConverter());
+        converters.Add(new AttributesTableConverter());
+        converters.Add(new GeometryConverter(factory, dimension));
+        converters.Add(new EnvelopeConverter());
     }
 }
