@@ -1,7 +1,15 @@
 <template>
   <div class="flex flex-col gap-4">
     <AppCard>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores sunt iusto nam, quo ratione ab reiciendis quam atque pariatur laborum nesciunt deserunt facere! Est unde voluptate magni rerum aliquid ratione!
+      <div class="prose max-w-none">
+        <p>The website should contain a form that allows to give the properties of a building:</p>
+        <ul>
+          <li>ground area</li>
+          <li>number of levels</li>
+          <li>usage</li>
+        </ul>
+        <p>These informations are sent to the back that uses a proprietary algoritm to calculate its consumption.</p>
+      </div>
     </AppCard>
     <div class="grid grid-cols-2 gap-4">
       <AppCard>
