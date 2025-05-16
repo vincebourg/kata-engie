@@ -2,8 +2,7 @@
 import { RouterView } from 'vue-router';
 
 const links = [
-  { name: 'Formulaire', path: '/' },
-  { name: 'Carte', path: '/map' },
+  { name: 'Carte', path: '/' },
 ];
 </script>
 
